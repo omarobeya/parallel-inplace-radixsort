@@ -25,7 +25,7 @@ To compile with g++ using Cilk Plus, define the environment variable
 CILK.
  
 Note: If you
-experience any errors, please send an email to [Julian Shun](mailto:jshun@mit.edu) or [Omar Obeya](mailto:omarobeya@gmail.com)..
+experience any errors, please send an email to [Julian Shun](mailto:jshun@mit.edu),[Endrias Kahssay](mailto:endrias@mit.edu) and [Omar Obeya](mailto:omarobeya@gmail.com).
 
 After the appropriate environment variables are set, to compile,
 simply run
