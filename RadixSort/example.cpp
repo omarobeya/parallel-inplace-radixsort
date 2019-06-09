@@ -68,12 +68,13 @@ int main(int argc, char **argv) {
 
     uintT* array = (uintT*) D.A;
     uintT* control_array = newA(uintT,length);
-	  
-
-
+    
     parallel_for(long i=0;i<length;i++) control_array[i] = array[i];
 
-		parallelIntegerSort(array, length, f);
+    for(long round=0;round<rounds;round++) {
+      parallel_for(long i=0;i<length;i++) array[i] = control_array[i];    
+      parallelIntegerSort(array, length, f);
+    }
   
     if(check) {
       check_sorted(array,length);
@@ -85,8 +86,11 @@ int main(int argc, char **argv) {
     uintTPair* control_array = newA(uintTPair,length);
     parallel_for(long i=0;i<length;i++) control_array[i] = array[i];
 
-		parallelIntegerSort(array, length, pairF);
-
+    for(long round=0;round<rounds;round++){
+      parallel_for(long i=0;i<length;i++) array[i] = control_array[i];    
+      parallelIntegerSort(array, length, pairF);
+    }
+    
     if(check) {
       check_sorted_pairs(array,length);
     }

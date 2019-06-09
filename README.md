@@ -47,24 +47,32 @@ The sort function takes a pointer to an array, the length of the array, and a fu
 
 The array could be an array of integers or pairs of integers.
 
-To set number of cilk workers to be 36 use
+To set number of Cilk workers to be N use
 
-export CILK\_NWORKERS=36; 
+export CILK\_NWORKERS=N; 
 
 before running the program.
 
+The "-r" flag specifies the number of rounds to run the algorithm. The "-c" flag specfies that a correctness test should be run.
+
 On NUMA machines, adding the command "numactl -i all " when running
-the program may improve performance for large number of threads. For example:
+the program may improve performance for large number of threads.
+
+Here is an example command for running the code for 3 rounds with correctness checking:
 
 ```
-numactl -i all ./radixSort -c <input_file> 
+numactl -i all ./radixSort -r 3 -c <input_file> 
 ```
 
 radixSort is the executable that uses the 2-path finding algorithm,
 while radixSort\_cycle is the executable that uses the cycle finding
 algorithm.
 
-The input file for integers needed by example.cpp must have a header "sequenceInt" and one integer per line.
+The input file needed by example.cpp is of the following format. For a
+sequence of integers, the file should have a header "sequenceInt" on
+the first line, followed by one integer per line. For pairs of
+integers, the file should have a header "sequenceIntPair", followed by
+two integers per line.
 
 
 
