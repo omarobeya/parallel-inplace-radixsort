@@ -52,7 +52,7 @@ void check_sorted_pairs(pair<uintT,T>* array, long length) {
 int main(int argc, char **argv) {
   commandLine P(argc,argv,"[-r <rounds>] [-c] <inFile>");
   char* iFile = P.getArgument(0);
-  int rounds = P.getOptionIntValue("-r",1);
+  int rounds = P.getOptionIntValue("-r",3);
   int workers = P.getOptionIntValue("-w",0); 
   if(workers != 0) {
    	setWorkers(workers);
@@ -72,8 +72,12 @@ int main(int argc, char **argv) {
     parallel_for(long i=0;i<length;i++) control_array[i] = array[i];
 
     for(long round=0;round<rounds;round++) {
-      parallel_for(long i=0;i<length;i++) array[i] = control_array[i];    
+      parallel_for(long i=0;i<length;i++) array[i] = control_array[i];
+      auto start = high_res_clock::now();
       parallelIntegerSort(array, length, f);
+      auto end = high_res_clock::now();
+      std::chrono::milliseconds diff = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+      std::cout << "radix sort time: " << diff.count() << " ms" << std::endl;
     }
   
     if(check) {
@@ -87,8 +91,12 @@ int main(int argc, char **argv) {
     parallel_for(long i=0;i<length;i++) control_array[i] = array[i];
 
     for(long round=0;round<rounds;round++){
+      auto start = high_res_clock::now();
       parallel_for(long i=0;i<length;i++) array[i] = control_array[i];    
       parallelIntegerSort(array, length, pairF);
+      auto end = high_res_clock::now();
+      std::chrono::milliseconds diff = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+      std::cout << "radix sort time: " << diff.count() << " ms" << std::endl;
     }
     
     if(check) {
