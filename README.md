@@ -25,7 +25,7 @@ To compile with g++ using Cilk Plus, define the environment variable
 CILK.
  
 Note: If you
-experience any errors, please send an email to [Julian Shun](mailto:jshun@mit.edu),[Endrias Kahssay](mailto:endrias@mit.edu) and [Omar Obeya](mailto:omarobeya@gmail.com).
+experience any errors, please send an email to [Julian Shun](mailto:jshun@mit.edu), [Endrias Kahssay](mailto:endrias@mit.edu), and [Omar Obeya](mailto:omarobeya@gmail.com).
 
 After the appropriate environment variables are set, to compile,
 simply run
@@ -95,6 +95,5 @@ The code is optimized for 8 bits.
 Resources  
 -------- 
 
-Omar Obeya, Endrias Kahssay, Edward Fan, and Julian Shun. Theoretically-
-efficient and practical parallel in-place radix sorting. In ACM Symposium on
+Omar Obeya, Endrias Kahssay, Edward Fan, and Julian Shun. Theoretically-efficient and practical parallel in-place radix sorting. In ACM Symposium on
 Parallelism in Algorithms and Architectures (SPAA), 2019.
