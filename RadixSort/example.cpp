@@ -12,19 +12,13 @@ using namespace benchIO;
 
 typedef std::chrono::high_resolution_clock high_res_clock;
 
-inline uintT f(const uintT& x) {
-  return x;//x % 1000000;
-}
-
 typedef pair<uintT,uintT> uintTPair;
-inline uintT pairF(const uintTPair& x) {
-  return x.first;// % 1000000;
-}
 
-void check_sorted(uintT*  array, long length) {
+template <class F>
+void check_sorted(uintT*  array, long length, F f) {
   uintT prev = array[0];
   parallel_for (long i=1;i<length;i++) {
-    if(f(array[i]) < f(array[i-1])) {
+    if(array[i] < array[i-1]) {
       printf("FAIL: ARRAY NOT SORTED!\n");
       exit(0);
     }
@@ -32,12 +26,12 @@ void check_sorted(uintT*  array, long length) {
   printf("array is sorted!\n");
 }
 
-template <class T>
-void check_sorted_pairs(pair<uintT,T>* array, long length) {
+template <class T, class F>
+void check_sorted_pairs(pair<uintT,T>* array, long length, F f) {
   bool sorted = true;
   long stability_error = 0;
   parallel_for (long i=1;i<length;i++) {
-    if(pairF(array[i]) < pairF(array[i-1])) {
+    if(f(array[i]) < f(array[i-1])) {
       sorted = false;
     }
 
@@ -66,7 +60,6 @@ int main(int argc, char **argv) {
   long length = D.n;
 
   if(dt == intType){ 
-
     uintT* array = (uintT*) D.A;
     uintT* control_array = newA(uintT,length);
     
@@ -75,14 +68,14 @@ int main(int argc, char **argv) {
     for(long round=0;round<rounds;round++) {
       parallel_for(long i=0;i<length;i++) array[i] = control_array[i];
       auto start = high_res_clock::now();
-      parallelIntegerSort(array, length, f);
+      parallelIntegerSort(array, length, utils::identityF<uintT>());
       auto end = high_res_clock::now();
       std::chrono::milliseconds diff = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
       std::cout << "radix sort time: " << diff.count() << " ms" << std::endl;
     }
   
     if(check) {
-      check_sorted(array,length);
+      check_sorted(array,length, utils::identityF<uintT>());
     }
     free(array); free(control_array);
   } else if (dt == intPairT) {
@@ -94,14 +87,14 @@ int main(int argc, char **argv) {
     for(long round=0;round<rounds;round++){
       parallel_for(long i=0;i<length;i++) array[i] = control_array[i];
       auto start = high_res_clock::now();
-      parallelIntegerSort(array, length, pairF);
+      parallelIntegerSort(array, length, utils::firstF<uintT,uintT>());
       auto end = high_res_clock::now();
       std::chrono::milliseconds diff = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
       std::cout << "radix sort time: " << diff.count() << " ms" << std::endl;
     }
     
     if(check) {
-      check_sorted_pairs(array,length);
+      check_sorted_pairs(array,length, utils::firstF<uintT,uintT>());
     }
 ;
     free(array); free(control_array);
