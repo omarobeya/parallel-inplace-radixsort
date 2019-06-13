@@ -92,8 +92,8 @@ int main(int argc, char **argv) {
     parallel_for(long i=0;i<length;i++) control_array[i] = array[i];
 
     for(long round=0;round<rounds;round++){
+      parallel_for(long i=0;i<length;i++) array[i] = control_array[i];
       auto start = high_res_clock::now();
-      parallel_for(long i=0;i<length;i++) array[i] = control_array[i];    
       parallelIntegerSort(array, length, pairF);
       auto end = high_res_clock::now();
       std::chrono::milliseconds diff = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
