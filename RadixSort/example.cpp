@@ -12,12 +12,12 @@ using namespace benchIO;
 
 typedef std::chrono::high_resolution_clock high_res_clock;
 
-int f(int x) {
-	return x % 1000000;
+inline uintT f(uintT x) {
+  return x;//x % 1000000;
 }
 typedef pair<uintT,uintT> uintTPair;
-int pairF(uintTPair x) {
-	return x.first % 1000000;
+inline uintT pairF(uintTPair x) {
+  return x.first;// % 1000000;
 }
 
 void check_sorted(uintT*  array, long length) {
