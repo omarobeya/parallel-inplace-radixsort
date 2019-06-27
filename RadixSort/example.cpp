@@ -64,12 +64,9 @@ int main(int argc, char **argv) {
     uintT* control_array = newA(uintT,length);
     
     parallel_for(long i=0;i<length;i++) control_array[i] = array[i];
-    cout << "a\n";
     for(long round=0;round<rounds;round++) {
       parallel_for(long i=0;i<length;i++) array[i] = control_array[i];
-      cout << round << endl;
       auto start = high_res_clock::now();
-      cout << "starting\n";
       parallelIntegerSort(array, length, utils::identityF<uintT>());
       auto end = high_res_clock::now();
       std::chrono::milliseconds diff = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
