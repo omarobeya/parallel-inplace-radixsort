@@ -37,9 +37,9 @@ void check_sorted_pairs(pair<uintT,T>* array, long length, F f) {
 
   }
   if(!sorted){
-	printf("FAIL: ARRAY NOT SORTED!\n");
+    printf("FAIL: ARRAY NOT SORTED!\n");
   } else {
-  printf("array is sorted!\n");
+    printf("array is sorted!\n");
   }
 }
 
@@ -50,7 +50,7 @@ int main(int argc, char **argv) {
   int rounds = P.getOptionIntValue("-r",3);
   int workers = P.getOptionIntValue("-w",0); 
   if(workers != 0) {
-   	setWorkers(workers);
+    setWorkers(workers);
   }
   bool check = P.getOption("-c");
 
@@ -64,10 +64,12 @@ int main(int argc, char **argv) {
     uintT* control_array = newA(uintT,length);
     
     parallel_for(long i=0;i<length;i++) control_array[i] = array[i];
-
+    cout << "a\n";
     for(long round=0;round<rounds;round++) {
       parallel_for(long i=0;i<length;i++) array[i] = control_array[i];
+      cout << round << endl;
       auto start = high_res_clock::now();
+      cout << "starting\n";
       parallelIntegerSort(array, length, utils::identityF<uintT>());
       auto end = high_res_clock::now();
       std::chrono::milliseconds diff = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
@@ -96,7 +98,7 @@ int main(int argc, char **argv) {
     if(check) {
       check_sorted_pairs(array,length, utils::firstF<uintT,uintT>());
     }
-;
+    ;
     free(array); free(control_array);
   } else if (dt == intStringPairT) {
     cout << "to implement" << endl;

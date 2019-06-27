@@ -44,98 +44,98 @@
 #include <sequence.h>
 using namespace std;
 
-    template <class E, class F>
-    void radixSortOneLevel(E* A, sizeT n, int doneOffset, F f, sizeT K, int depth) {
-      if(doneOffset <= 0 || n <= 1) {
-        return;
-      }
+template <class E, class F>
+  void radixSortOneLevel(E* A, sizeT n, int doneOffset, F f, sizeT K, int depth) {
+  if(doneOffset <= 0 || n <= 1) {
+    return;
+  }
 
-      int bits = MAX_RADIX;
-      int buckets = BUCKETS;
+  int bits = MAX_RADIX;
+  int buckets = BUCKETS;
 
-      int start = max(doneOffset - bits, 0);
-
-
-      bool needToRecurse = true;
+  int start = max(doneOffset - bits, 0);
 
 
-      long localCounts[BUCKETS];
-      needToRecurse = multiBitSwapBasedSort(A, n, buckets, K, localCounts, eBits<E, F>(doneOffset - start, start, f), f, depth, start);
+  bool needToRecurse = true;
+
+
+  long localCounts[BUCKETS];
+  needToRecurse = multiBitSwapBasedSort(A, n, buckets, K, localCounts, eBits<E, F>(doneOffset - start, start, f), f, depth, start);
    
-      if(start <= 0)
-        return;
+  if(start <= 0)
+    return;
 
-      if(needToRecurse) {
-				long sum = 0;
-        for(int i = 0; i < BUCKETS; i++) {
-          radixSortOneLevel(A + sum, localCounts[i], start, f, (sizeT)1, depth + 1);
-					sum += localCounts[i];
+  if(needToRecurse) {
+    long sum = 0;
+    for(int i = 0; i < BUCKETS; i++) {
+      radixSortOneLevel(A + sum, localCounts[i], start, f, (sizeT)1, depth + 1);
+      sum += localCounts[i];
 
-        }
+    }
         
-      }
+  }
 
+}
+
+template <class E, class F>
+  void radixSortRoutine(sizeT index, E* A, sizeT n, int doneOffset, F f){ 
+  sizeT K; 
+#ifdef CYCLE
+  K = getWorkers();
+#else
+
+  sizeT optimalCache = (n*sizeof(E))/BLOCK_DIVIDE; 
+  if(optimalCache >  getWorkers() && optimalCache <= K_BOUND){
+    K = optimalCache; 
+  }
+  else{
+    if(optimalCache < getWorkers()) {
+      K = getWorkers();
+    } else {
+      K = K_BOUND;
     }
+  }
 
-    template <class E, class F>
-    void radixSortRoutine(sizeT index, E* A, sizeT n, int doneOffset, F f){ 
-      sizeT K; 
-      #ifdef CYCLE
-        K = getWorkers();
-      #else
+#endif
+  global_K = K;
+  global_N = n;
 
-        sizeT optimalCache = (n*sizeof(E))/BLOCK_DIVIDE; 
-        if(optimalCache >  getWorkers() && optimalCache <= K_BOUND){
-          K = optimalCache; 
-        }
-        else{
-		if(optimalCache < getWorkers()) {
-			K = getWorkers();
-		} else {
-			K = K_BOUND;
-		}
-        }
-
-      #endif
-	global_K = K;
-	global_N = n;
-
-        radixSortOneLevel(A, n, doneOffset, f, K, 0);
+  radixSortOneLevel(A, n, doneOffset, f, K, 0);
           
-    };
+};
 
 
-    int roundUpToRadixMultiple(int num){
-      if(num % MAX_RADIX == 0){
-        return num; 
-      }
-      else{
-        return ((num / MAX_RADIX) + 1)  * MAX_RADIX;
-      }
-    }
+int roundUpToRadixMultiple(int num){
+  if(num % MAX_RADIX == 0){
+    return num; 
+  }
+  else{
+    return ((num / MAX_RADIX) + 1)  * MAX_RADIX;
+  }
+}
 
-    int roundUpBits(int num){
+int roundUpBits(int num){
 
-      int multipleOfRadix = roundUpToRadixMultiple(num); 
+  int multipleOfRadix = roundUpToRadixMultiple(num); 
 #ifdef BITS_HACK
-	#if MAX_RADIX == 8
-      	if(multipleOfRadix >= num + 2) {
-		return num+2;
-	}
-	#endif
+#if MAX_RADIX == 8
+  if(multipleOfRadix >= num + 2) {
+    return num+2;
+  }
+#endif
 #endif 
-      return multipleOfRadix;
-    }
+  return multipleOfRadix;
+}
 
-    template <class E, class F, class K>
-    void iSort(E *A, sizeT n, K m, F f) {
-      int bits = roundUpBits(utils::log2Up(m)); 
-      radixSortRoutine((sizeT)0, A, n, bits, f);
-    }
+template <class E, class F, class K>
+  void iSort(E *A, sizeT n, K m, F f) {
+  int bits = roundUpBits(utils::log2Up(m)); 
+  radixSortRoutine((sizeT)0, A, n, bits, f);
+}
 
 
 template <class E, class F, class K>
-K findMaxHelper(E* A, sizeT n, F f, sizeT P, K t){
+  K findMaxHelper(E* A, sizeT n, F f, sizeT P, K t){
  
   K* temp = (K*)malloc(sizeof(E) * (P + 1));
   parallel_for(unsigned long i = 0; i <P; i ++) {
@@ -145,7 +145,7 @@ K findMaxHelper(E* A, sizeT n, F f, sizeT P, K t){
     for(;start < end; start++){
       K current = f(A[start]);
       if(current > local_max) {
-				local_max = current; 
+	local_max = current; 
       }
 
     }
@@ -155,22 +155,22 @@ K findMaxHelper(E* A, sizeT n, F f, sizeT P, K t){
   K global_max = temp[0]; 
 
   for(int i = 0; i < P; i++) {
-      if(temp[i] > global_max) {
-				global_max = temp[i]; 
-      }
+    if(temp[i] > global_max) {
+      global_max = temp[i]; 
+    }
   }
 
-	return global_max;
+  return global_max;
 }
 
 
 template <class E, class F, class K>
-K findMax(E* A, sizeT n, F f, K temp){
-	K maxV = findMaxHelper(A, n, f, (sizeT)1000*getWorkers(), temp);
+  K findMax(E* A, sizeT n, F f, K temp){
+  K maxV = findMaxHelper(A, n, f, (sizeT)1000*getWorkers(), temp);
   return maxV; 
 }
 template <class T, class F>
-static void parallelIntegerSort(T *A, sizeT n, F f) {
+  static void parallelIntegerSort(T *A, sizeT n, F f) {
   T temp;
   T maxV = findMax(A, n, f, temp);
   iSort(A, n, maxV+1,  f); 
@@ -178,19 +178,19 @@ static void parallelIntegerSort(T *A, sizeT n, F f) {
 
 template <class T>
 static void parallelIntegerSort(T *A, sizeT n) {
-	parallelIntegerSort(A, n, utils::identityF<T>());
+  parallelIntegerSort(A, n, utils::identityF<T>());
 }
 
 template <class T1, class T2, class F>
-void parallelIntegerSort(pair<T1, T2> *A, sizeT n, F f) {
-	T1 temp;
-  T1 maxV = findMax(A, n, f, temp); 
+  void parallelIntegerSort(pair<T1, T2> *A, sizeT n, F f) {
+  T1 temp;
+  T1 maxV = findMax(A, n, f, temp);
   iSort(A, n, maxV+1, f);
 }
 
 template <class T1, class T2>
-void parallelIntegerSort(pair<T1, T2> *A, sizeT n) {
-	parallelIntegerSort(A, n, utils::firstF<T1, T2>());
+  void parallelIntegerSort(pair<T1, T2> *A, sizeT n) {
+  parallelIntegerSort(A, n, utils::firstF<T1, T2>());
 }
 
 #endif
