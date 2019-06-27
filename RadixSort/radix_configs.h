@@ -1,7 +1,7 @@
 #ifndef _S_CONFIGS_INCLUDED
 #define _S_CONFIGS_INCLUDED
 
-#define ILP_SORT
+//#define ILP_SORT
 #define MAXP 100
 #define MAXBITS 100
 #ifndef MAX_RADIX
