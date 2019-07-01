@@ -136,7 +136,7 @@ template <class E, class F, class K>
 
 template <class E, class F, class K>
   K findMaxHelper(E* A, sizeT n, F f, sizeT P, K t){
- 
+  
   K* temp = (K*)malloc(sizeof(E) * (P + 1));
   parallel_for(unsigned long i = 0; i <P; i ++) {
     unsigned long start = i * (long)n / P;
@@ -159,7 +159,7 @@ template <class E, class F, class K>
       global_max = temp[i]; 
     }
   }
-
+  free(temp);
   return global_max;
 }
 

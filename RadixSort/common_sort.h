@@ -78,7 +78,9 @@ template< class _Type, typename F>
   startOfBin[ 0 ] = endOfBin[ 0 ] = nextBin = 0;
   for( unsigned long i = 1; i < numberOfBins; i++ )
     startOfBin[ i ] = endOfBin[ i ] = startOfBin[ i - 1 ] + count[ i - 1 ];
-  for ( long _current = 0; _current <= last-count[PowerOfTwoRadix-1]; )
+  
+  long end = last-count[PowerOfTwoRadix-1]; 
+  for ( long _current = 0; _current <= end ; )
     {
       unsigned long digit;
       _Type tmp = a[ _current ];  // get the compiler to recognize that a register can be used for the loop instead of a[_current] memory location
