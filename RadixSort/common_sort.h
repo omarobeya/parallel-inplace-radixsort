@@ -79,7 +79,7 @@ template< class _Type, typename F>
   for( unsigned long i = 1; i < numberOfBins; i++ )
     startOfBin[ i ] = endOfBin[ i ] = startOfBin[ i - 1 ] + count[ i - 1 ];
   
-  long end = last-count[PowerOfTwoRadix-1]; 
+  long end = last-(long)count[PowerOfTwoRadix-1]; 
   for ( long _current = 0; _current <= end ; )
     {
       unsigned long digit;

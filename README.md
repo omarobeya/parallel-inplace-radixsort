@@ -95,5 +95,5 @@ The code is optimized for 8 bits.
 Resources  
 -------- 
 
-Omar Obeya, Endrias Kahssay, Edward Fan, and Julian Shun. Theoretically-efficient and practical parallel in-place radix sorting. In ACM Symposium on
+Omar Obeya, Endrias Kahssay, Edward Fan, and Julian Shun. [Theoretically-Efficient and Practical Parallel In-Place Radix Sorting](https://people.csail.mit.edu/jshun/RegionsSort.pdf). In ACM Symposium on
 Parallelism in Algorithms and Architectures (SPAA), 2019.
