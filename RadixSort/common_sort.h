@@ -1,7 +1,7 @@
 #ifndef _S_COMMONSORT_INCLUDED
 #define _S_COMMONSORT_INCLUDED
-#include <misc.h>
-#include <radix_configs.h>
+#include "misc.h"
+#include "radix_configs.h"
 
 template< class _Type>
 //gcc can't inline this funciton for some reson 

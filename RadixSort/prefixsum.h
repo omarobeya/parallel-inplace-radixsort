@@ -1,9 +1,9 @@
 #ifndef _S_PREFIXSUM_INCLUDED
 #define _S_PREFIXSUM_INCLUDED
 
-#include <edge.h>
+#include "edge.h"
 #include <vector>
-#include <radix_configs.h>
+#include "radix_configs.h"
 
 using namespace std;
 typedef unsigned char uint8_t;
