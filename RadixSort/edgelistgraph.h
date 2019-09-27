@@ -2,15 +2,15 @@
 #define _S_EDGELISTGRAPH_INCLUDED
 
 #include <stdio.h>
-#include <edge.h>
+#include "edge.h"
 #include <vector>
-#include <prefixsum.h>
-#include <triangle.h>
-#include <block.h>
-#include <misc.h>
-#include <radix_configs.h>
-#include <../common/blockRadixSort.h>
-#include <../common/blockRadixSort2.h>
+#include "prefixsum.h"
+#include "triangle.h"
+#include "block.h"
+#include "misc.h"
+#include "radix_configs.h"
+#include "../common/blockRadixSort.h"
+#include "../common/blockRadixSort2.h"
 #include <algorithm>
 using namespace std;
 

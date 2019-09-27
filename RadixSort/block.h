@@ -1,8 +1,8 @@
 #ifndef _S_BLOCK_INCLUDED
 #define _S_BLOCK_INCLUDED
-#include <common_sort.h>
-#include <radix_configs.h>
-#include <ska_sort.hpp> 
+#include "common_sort.h"
+#include "radix_configs.h"
+#include "ska_sort.hpp"
 
 
 class SimpleBlock{

@@ -2,9 +2,9 @@
 #define _S_TRIANGLE_INCLUDED
 
 #include <stdio.h>
-#include <edge.h>
-#include <prefixsum.h>
-#include <radix_configs.h>
+#include "edge.h"
+#include "prefixsum.h"
+#include "radix_configs.h"
 #include <algorithm>
 using namespace std;
 
