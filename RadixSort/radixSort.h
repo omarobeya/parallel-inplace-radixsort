@@ -27,6 +27,7 @@
 
 //#define DEBUG 0
 
+#include <type_traits>
 #include <iostream>
 #include <algorithm>
 #include <cmath>
@@ -171,8 +172,9 @@ template <class E, class F, class K>
 }
 template <class T, class F>
   static void parallelIntegerSort(T *A, sizeT n, F f) {
-  T temp;
-  T maxV = findMax(A, n, f, temp);
+  using key_type = std::remove_reference_t<std::result_of_t<F(T)>>;
+  key_type temp;
+  key_type maxV = findMax(A, n, f, temp);
   iSort(A, n, maxV+1,  f); 
 }
 
