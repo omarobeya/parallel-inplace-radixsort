@@ -42,10 +42,10 @@ COMMON = common_sort.h regionsSort.h parallel.h prefixsum.h radix_configs.h sequ
 default : radixSort radixSort_cycle 
 
 radixSort : $(COMMON)
-	g++ -I. -std=c++14 example.cpp -DCILKP -DBITS_HACK -O3 -flto -march=native -fcilkplus -lcilkrts -o radixSort
+	g++ -I. -std=c++14 example.cpp -DCILKP -DBITS_HACK -DLONG_ARRAY -O3 -flto -march=native -fcilkplus -lcilkrts -o radixSort
 
 radixSort_cycle : $(COMMON)
-	g++ -I. -std=c++14 example.cpp -DCILKP -DCYCLE -DBITS_HACK -O3 -flto -march=native -fcilkplus -lcilkrts -o radixSort_cycle
+	g++ -I. -std=c++14 example.cpp -DCILKP -DCYCLE -DBITS_HACK -DLONG_ARRAY -O3 -flto -march=native -fcilkplus -lcilkrts -o radixSort_cycle
 
 # Each C source file will have a corresponding file of prerequisites.
 # Include the prerequisites for each of our C source files.
