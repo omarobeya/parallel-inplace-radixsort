@@ -90,6 +90,10 @@ algorithm, otherwise the code uses the 2-path finding algorithm by default.
 Set the MAX\_RADIX macro to the number of bits need to be read at each level of recursion in radix sort.
 The code is optimized for 8 bits.
 
+3. LONG\_ARRAY
+
+(Warning: we put this flag on hold, since the code sometimes craches when using it. We are working to solve this issue, thanks for your patience.)
+Set the LONG\_ARRAY macro to allow inputs with more than 2^31 elements.
 
 
 Resources  
